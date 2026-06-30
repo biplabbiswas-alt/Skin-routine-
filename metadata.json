@@ -1,0 +1,6 @@
+{
+  "name": "Skin Care Recommender",
+  "description": "Selfie-based skin analysis and personalized skincare product recommendation engine.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
