@@ -244,10 +244,21 @@ export default function App() {
       setResult(data);
       setStep('result');
     } catch (err: any) {
-      console.error("API Analysis error:", err);
-      setError(err.message || "Something went wrong while connecting with the Dermalens AI Core. Please try again.");
-      setShowLocalFallbackOption(true);
-      setStep('questions');
+      console.warn("API Analysis failed or unavailable. Falling back to high-fidelity offline cosmetic chemistry engine:", err);
+      
+      // Automatic and seamless fallback
+      try {
+        const localRes = generateLocalAnalysis(answers);
+        setIsLocalResult(true);
+        setResult(localRes);
+        setStep('result');
+        setError(null);
+      } catch (fallbackErr) {
+        console.error("Critical fallback engine error:", fallbackErr);
+        setError(err.message || "Something went wrong while connecting with the Dermalens AI Core. Please try again.");
+        setShowLocalFallbackOption(true);
+        setStep('questions');
+      }
     }
   };
 
